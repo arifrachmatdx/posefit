@@ -1,0 +1,1 @@
+C:\Users\User\AndroidStudioProjects\RealtimePoseDetectionStarter2025\build\app\intermediates\cxx\Debug\1a5d174i\obj\x86_64

@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.pose_detection_realtime"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "28.0.13004108"
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -1,0 +1,2 @@
+C:/Users/User/AndroidStudioProjects/RealtimePoseDetectionStarter2025/android/app/.cxx/Debug/1a5d174i/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/User/AndroidStudioProjects/RealtimePoseDetectionStarter2025/android/app/.cxx/Debug/1a5d174i/armeabi-v7a/CMakeFiles/rebuild_cache.dir
