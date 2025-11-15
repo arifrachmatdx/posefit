@@ -75,14 +75,16 @@ class _MyHomePageState extends State<Detectionscreen> {
       print("pose=" + poses.length.toString());
       _scanResults = poses;
       if(poses.length>0) {
-        if(widget.exerciseDataModel.type == 1){
+        if(widget.exerciseDataModel.type == ExerciseType.PushUps){
           detectPushUp(poses.first.landmarks);
-        }else if(widget.exerciseDataModel.type == 2){
+        }else if(widget.exerciseDataModel.type == ExerciseType.Squats){
           detectSquat(poses.first.landmarks);
-        }else if(widget.exerciseDataModel.type == 3){
+        }else if(widget.exerciseDataModel.type == ExerciseType.DownwardDogPlank){
           detectPlankToDownwardDog(poses.first);
-        }else if(widget.exerciseDataModel.type == 4) {
+        }else if(widget.exerciseDataModel.type == ExerciseType.JumpingJack) {
           detectJumpingJack(poses.first);
+        }else if(widget.exerciseDataModel.type == ExerciseType.HighKnees) {
+          detectHighKnees(poses.first.landmarks);
         }
       }
     }
@@ -136,16 +138,35 @@ class _MyHomePageState extends State<Detectionscreen> {
           alignment: Alignment.bottomCenter,
           child: Container(
             margin: EdgeInsets.only(bottom: 50),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Colors.black,),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: widget.exerciseDataModel.color,),
             child: Center(
               child: Text(
-                widget.exerciseDataModel.type == 1?
-                "$pushUpCount":widget.exerciseDataModel.type == 2?
-                "$squatCount":widget.exerciseDataModel.type == 3?"$plankToDownwardDogCount":"$jumpingJackCount",
+                widget.exerciseDataModel.type == ExerciseType.PushUps?
+                "$pushUpCount":widget.exerciseDataModel.type == ExerciseType.Squats?
+                "$squatCount":widget.exerciseDataModel.type == ExerciseType.DownwardDogPlank?
+                "$plankToDownwardDogCount":widget.exerciseDataModel.type == ExerciseType.HighKnees?"$highKneeCount":"$jumpingJackCount",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
             width: 70,
+            height: 70,
+          ),
+        ),
+      );
+
+      stackChildren.add(
+        Align(
+          alignment: Alignment.topCenter  ,
+          child: Container(
+            margin: EdgeInsets.only(top: 50, left: 20, right: 20),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: widget.exerciseDataModel.color,),
+            child: Center(
+              child: Text(
+                widget.exerciseDataModel.title,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+            width: MediaQuery.of(context).size.width,
             height: 70,
           ),
         ),
@@ -355,6 +376,58 @@ class _MyHomePageState extends State<Detectionscreen> {
       print("Jumping Jack Count: $jumpingJackCount");
     }
   }
+
+  int highKneeCount = 0;
+  bool leftKneeUp = false;
+  bool rightKneeUp = false;
+
+  void detectHighKnees(Map<PoseLandmarkType, PoseLandmark> landmarks) {
+    final leftHip = landmarks[PoseLandmarkType.leftHip];
+    final rightHip = landmarks[PoseLandmarkType.rightHip];
+    final leftKnee = landmarks[PoseLandmarkType.leftKnee];
+    final rightKnee = landmarks[PoseLandmarkType.rightKnee];
+
+    if (leftHip == null ||
+        rightHip == null ||
+        leftKnee == null ||
+        rightKnee == null) {
+      return; // missing data
+    }
+
+    // Average hip height (y)
+    double hipY = (leftHip.y + rightHip.y) / 2;
+
+    // Knee Y positions
+    double leftKneeY = leftKnee.y;
+    double rightKneeY = rightKnee.y;
+
+    // Threshold: how high the knee must be raised
+    // You can tweak this (0.15 is usually good for ML Kit)
+    double kneeLiftThreshold = hipY - 0.15;
+
+    // LEFT KNEE LIFT
+    if (leftKneeY < kneeLiftThreshold) {
+      if (!leftKneeUp) {
+        leftKneeUp = true;
+        highKneeCount++;
+        setState(() {});
+      }
+    } else {
+      leftKneeUp = false;
+    }
+
+    // RIGHT KNEE LIFT
+    if (rightKneeY < kneeLiftThreshold) {
+      if (!rightKneeUp) {
+        rightKneeUp = true;
+        highKneeCount++;
+        setState(() {});
+      }
+    } else {
+      rightKneeUp = false;
+    }
+  }
+
 
   // Function to calculate angle between three points (shoulder, elbow, wrist)
   double calculateAngle(

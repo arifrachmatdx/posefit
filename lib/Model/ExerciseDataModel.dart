@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+enum ExerciseType{PushUps, Squats, DownwardDogPlank, JumpingJack, HighKnees}
 class ExerciseDataModel{
   String title;
   String image;
   Color color;
-  int type;
+  ExerciseType type;
   ExerciseDataModel(this.title, this.image, this.color, this.type);
 }

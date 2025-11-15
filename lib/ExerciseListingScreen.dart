@@ -14,10 +14,11 @@ class _ExerciselistingscreenState extends State<Exerciselistingscreen> {
   List<ExerciseDataModel> exerciseList = [];
 
   loadData() {
-    exerciseList.add(ExerciseDataModel("Push Ups", "pushup.gif", const Color(0xff005F9C), 1));
-    exerciseList.add(ExerciseDataModel("Squats", "squat.gif", const Color(0xffDF5089), 2));
-    exerciseList.add(ExerciseDataModel("Plank to Downward Dog", "plank.gif", const Color(0xffFD8636), 3));
-    exerciseList.add(ExerciseDataModel("Jumping Jack", "jumping.gif", const Color(0xff000000), 4));
+    exerciseList.add(ExerciseDataModel("Push Ups", "pushup.gif", const Color(0xff005F9C), ExerciseType.PushUps));
+    exerciseList.add(ExerciseDataModel("Squats", "squat.gif", const Color(0xffDF5089), ExerciseType.Squats));
+    exerciseList.add(ExerciseDataModel("Plank to Downward Dog", "plank.gif", const Color(0xffFD8636), ExerciseType.DownwardDogPlank));
+    exerciseList.add(ExerciseDataModel("Jumping Jack", "jumping.gif", const Color(0xff000000), ExerciseType.JumpingJack));
+    exerciseList.add(ExerciseDataModel("High Knees", "jumping.gif", Colors.deepPurple, ExerciseType.HighKnees));
 
     setState(() {});
   }
