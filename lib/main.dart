@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+
 import 'package:pose_detection_realtime/ExerciseListingScreen.dart';
+import 'package:pose_detection_realtime/HomeScreen.dart';
+
 
 late List<CameraDescription> cameras;
 
@@ -18,12 +21,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: Exerciselistingscreen());
+    return const MaterialApp(
+      home: HomeScreen(),
+    );
   }
 }
+
 
 class PosePainter extends CustomPainter {
   PosePainter(this.absoluteImageSize, this.poses);
