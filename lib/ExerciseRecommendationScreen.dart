@@ -8,7 +8,6 @@ class ExerciseRecommendationScreen extends StatelessWidget {
   const ExerciseRecommendationScreen({super.key, required this.category});
 
   List<ExerciseDataModel> loadExercisesByCategory() {
-    // Sementara dikelompokkan manual
     if (category == "Kebugaran") {
       return [
         ExerciseDataModel("Jumping Jack", "jumping.gif", Colors.black, ExerciseType.JumpingJack),
@@ -33,24 +32,103 @@ class ExerciseRecommendationScreen extends StatelessWidget {
     final exercises = loadExercisesByCategory();
 
     return Scaffold(
-      appBar: AppBar(title: Text("Latihan - $category")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        title: Text(
+          "Latihan - $category",
+          style: const TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: ListView.builder(
+        padding: const EdgeInsets.all(16),
         itemCount: exercises.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(exercises[index].title),
-            leading: Image.asset("assets/${exercises[index].image}", width: 50),
-            trailing: const Icon(Icons.arrow_forward),
+          final ex = exercises[index];
+
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ExerciseDetailScreen(
-                    exercise: exercises[index],
-                  ),
+                  builder: (_) => ExerciseDetailScreen(exercise: ex),
                 ),
               );
             },
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.withOpacity(0.25),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Gambar latihan
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                    child: Image.asset(
+                      "assets/${ex.image}",
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+
+                  // Title + Icon
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ex.title,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(Icons.fitness_center, size: 18, color: Colors.orange.shade700),
+                              const SizedBox(width: 6),
+                              Text(
+                                category,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.only(right: 12),
+                    child: Icon(Icons.arrow_forward_ios, color: Colors.orange),
+                  )
+                ],
+              ),
+            ),
           );
         },
       ),
