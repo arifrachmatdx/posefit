@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pose_detection_realtime/CategoryScreen.dart';
 
+/// Halaman utama aplikasi.
+/// Menampilkan logo, judul aplikasi, subtitle, dan tombol menuju kategori latihan.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -8,21 +10,28 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      /// SafeArea agar tampilan tidak tertutup notch atau status bar
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+
             const SizedBox(height: 40),
 
-            // 🔥 Logo
+            // ----------------------------------------------------------
+            // 🔥 LOGO APLIKASI
+            // ----------------------------------------------------------
             Image.asset(
               "assets/logo.jpg",
-              height: 120,
+              height: 120, // ukuran logo
             ),
 
             const SizedBox(height: 20),
 
-            // ✨ Title
+            // ----------------------------------------------------------
+            // ✨ JUDUL / TITLE APLIKASI
+            // ----------------------------------------------------------
             const Text(
               "Top Gym AI Trainer",
               style: TextStyle(
@@ -34,7 +43,9 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // ✨ Subtitle
+            // ----------------------------------------------------------
+            // ✨ SUBTITLE
+            // ----------------------------------------------------------
             const Text(
               "Latihan cerdas dengan AI",
               style: TextStyle(
@@ -45,11 +56,16 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // 🔶 Big Card Button
+            // ----------------------------------------------------------
+            // 🔶 TOMBOL KATEGORI LATIHAN (Card Besar)
+            // ----------------------------------------------------------
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
+
+              /// GestureDetector agar seluruh card bisa ditekan
               child: GestureDetector(
                 onTap: () {
+                  /// Navigasi ke halaman kategori latihan
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -57,6 +73,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 },
+
+                /// Tampilan card tombol
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
@@ -71,6 +89,8 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     borderRadius: BorderRadius.circular(20),
+
+                    /// Efek bayangan agar tombol terlihat mengangkat
                     boxShadow: [
                       BoxShadow(
                         color: Colors.orange.withOpacity(0.3),
@@ -79,6 +99,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  /// Isi tombol
                   child: const Center(
                     child: Text(
                       "Kategori Latihan",

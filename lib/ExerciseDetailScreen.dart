@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:pose_detection_realtime/Model/ExerciseDataModel.dart';
 import 'package:pose_detection_realtime/DetectionScreen.dart';
 
+/// Halaman detail latihan.
+/// Menampilkan gambar latihan, judul, deskripsi, dan tombol untuk memulai deteksi pose.
 class ExerciseDetailScreen extends StatelessWidget {
   final ExerciseDataModel exercise;
 
+  /// Screen menerima model latihan (exercise) melalui constructor.
   const ExerciseDetailScreen({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      /// AppBar dengan judul latihan
       appBar: AppBar(
         backgroundColor: Colors.orange,
         elevation: 0,
@@ -20,16 +25,23 @@ class ExerciseDetailScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+
+      /// Konten halaman dapat discroll (jika melebihi layar)
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Gambar latihan
+
+            // ----------------------------------------------------------
+            // 📌 GAMBAR LATIHAN
+            // ----------------------------------------------------------
             Center(
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
+
+                  /// Bayangan lembut untuk mempercantik tampilan gambar
                   boxShadow: [
                     BoxShadow(
                       color: Colors.orange.withOpacity(0.25),
@@ -38,6 +50,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                     )
                   ],
                 ),
+
+                /// Membuat gambar memiliki sudut rounded
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
@@ -51,7 +65,9 @@ class ExerciseDetailScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            // Judul
+            // ----------------------------------------------------------
+            // 📌 JUDUL LATIHAN
+            // ----------------------------------------------------------
             Text(
               exercise.title,
               style: const TextStyle(
@@ -63,7 +79,9 @@ class ExerciseDetailScreen extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            // Card Deskripsi
+            // ----------------------------------------------------------
+            // 📌 DESKRIPSI LATIHAN (Card)
+            // ----------------------------------------------------------
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -82,7 +100,9 @@ class ExerciseDetailScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // Tombol Besar Mulai
+            // ----------------------------------------------------------
+            // 🔵 TOMBOL BESAR: MULAI DETEKSI POSE
+            // ----------------------------------------------------------
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -94,6 +114,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  /// Navigasi ke DetectionScreen dengan membawa data latihan
                   Navigator.push(
                     context,
                     MaterialPageRoute(

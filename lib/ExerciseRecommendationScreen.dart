@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:pose_detection_realtime/Model/ExerciseDataModel.dart';
 import 'package:pose_detection_realtime/ExerciseDetailScreen.dart';
 
+/// Halaman rekomendasi latihan berdasarkan kategori.
+/// Menampilkan daftar latihan yang sesuai dengan kategori yang dipilih.
 class ExerciseRecommendationScreen extends StatelessWidget {
   final String category;
 
+  /// Constructor menerima kategori dari halaman sebelumnya.
   const ExerciseRecommendationScreen({super.key, required this.category});
 
+  /// Fungsi untuk mengambil daftar latihan sesuai kategori.
+  /// Mengembalikan List<ExerciseDataModel>.
   List<ExerciseDataModel> loadExercisesByCategory() {
     if (category == "Kebugaran") {
       return [
@@ -22,6 +27,7 @@ class ExerciseRecommendationScreen extends StatelessWidget {
       ];
     }
 
+    // Default: kategori Kelincahan
     return [
       ExerciseDataModel("Plank to Downward Dog", "plank.gif", const Color(0xffFD8636), ExerciseType.DownwardDogPlank),
     ];
@@ -29,10 +35,13 @@ class ExerciseRecommendationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Ambil daftar latihan berdasarkan kategori
     final exercises = loadExercisesByCategory();
 
     return Scaffold(
       backgroundColor: Colors.white,
+
+      /// AppBar halaman
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: Text(
@@ -42,6 +51,8 @@ class ExerciseRecommendationScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
+
+      /// Daftar latihan menggunakan ListView.builder
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: exercises.length,
@@ -49,6 +60,7 @@ class ExerciseRecommendationScreen extends StatelessWidget {
           final ex = exercises[index];
 
           return GestureDetector(
+            /// Ketika item latihan ditekan → masuk ke detail latihan
             onTap: () {
               Navigator.push(
                 context,
@@ -57,12 +69,16 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                 ),
               );
             },
+
+            /// Card latihan
             child: Container(
               margin: const EdgeInsets.only(bottom: 16),
               height: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
+
+                /// Bayangan lembut
                 boxShadow: [
                   BoxShadow(
                     color: Colors.orange.withOpacity(0.25),
@@ -71,9 +87,13 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
+              /// Isi card
               child: Row(
                 children: [
-                  // Gambar latihan
+                  // ----------------------------------------------------------
+                  // 📌 GAMBAR LATIHAN (kiri)
+                  // ----------------------------------------------------------
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -87,7 +107,9 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Title + Icon
+                  // ----------------------------------------------------------
+                  // 📌 TEKS: Nama Latihan + Icon Kategori
+                  // ----------------------------------------------------------
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -95,6 +117,7 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          /// Judul latihan
                           Text(
                             ex.title,
                             style: const TextStyle(
@@ -103,10 +126,17 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                               color: Colors.black87,
                             ),
                           ),
+
                           const SizedBox(height: 6),
+
+                          /// Icon dan kategori
                           Row(
                             children: [
-                              Icon(Icons.fitness_center, size: 18, color: Colors.orange.shade700),
+                              Icon(
+                                Icons.fitness_center,
+                                size: 18,
+                                color: Colors.orange.shade700,
+                              ),
                               const SizedBox(width: 6),
                               Text(
                                 category,
@@ -122,6 +152,9 @@ class ExerciseRecommendationScreen extends StatelessWidget {
                     ),
                   ),
 
+                  // ----------------------------------------------------------
+                  // ➡️ ICON PANAH KANAN
+                  // ----------------------------------------------------------
                   const Padding(
                     padding: EdgeInsets.only(right: 12),
                     child: Icon(Icons.arrow_forward_ios, color: Colors.orange),
